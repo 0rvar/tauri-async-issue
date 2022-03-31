@@ -9,6 +9,14 @@ fn main() {
         .build(tauri::generate_context!())
         .expect("failed to build Tauri application");
 
+    spawn_async();
+
+    app.run(|_app_handle, event| match event {
+        _ => {}
+    });
+}
+
+fn spawn_async() {
     let server = actix_web::HttpServer::new(move || {
         actix_web::App::new().route(
             "/{token}",
@@ -19,8 +27,4 @@ fn main() {
     .expect("Failed to run http server")
     .run();
     tauri::async_runtime::spawn(server);
-
-    app.run(|_app_handle, event| match event {
-        _ => {}
-    });
 }
