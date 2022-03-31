@@ -18,10 +18,7 @@ fn main() {
 
 fn spawn_async() {
     let server = actix_web::HttpServer::new(move || {
-        actix_web::App::new().route(
-            "/{token}",
-            actix_web::web::get().to(async || "Hello, world"),
-        )
+        actix_web::App::new().route("/", actix_web::web::get().to(async || "Hello, world"))
     })
     .bind("127.0.0.1:5005")
     .expect("Failed to run http server")
